@@ -11,6 +11,8 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { styled } from "@mui/material/styles";
+import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 
 function createData(name, streams, danceability, tempo, energy, valance) {
   return { name, streams, danceability, tempo, energy, valance };
@@ -150,6 +152,18 @@ function Search() {
     }
   };
 
+  const HtmlTooltip = styled(({ className, ...props }) => (
+    <Tooltip {...props} classes={{ popper: className }} />
+  ))(({ theme }) => ({
+    [`& .${tooltipClasses.tooltip}`]: {
+      backgroundColor: "#f5f5f9",
+      color: "rgba(0, 0, 0, 0.87)",
+      maxWidth: 400,
+      fontSize: theme.typography.pxToRem(12),
+      border: "1px solid #dadde9",
+    },
+  }));
+
   return (
     <>
       <div className="search">SEARCH</div>
@@ -160,9 +174,30 @@ function Search() {
           value={song}
           onChange={(e) => setSong(e.target.value)}
         />
-        <Button variant="contained" onClick={handleSearchClick}>
-          SEARCH
-        </Button>
+        <HtmlTooltip
+          title={
+            <React.Fragment>
+              <b>
+                {"Note: The only searchable songs currently are: "} <br />
+              </b>
+              {"-Shape of You"} <br />
+              {"-Perfect"} <br />
+              {"-Sunflower"} <br />
+              {"-Believer"} <br />
+              {"-One Dance"} <br />
+              {"-Closer"} <br />
+              {"-Someone You Loved"} <br />
+              {"-STAY"} <br />
+              {"-rockstar"} <br />
+              {"-Blinding Lights"} <br />
+            </React.Fragment>
+          }
+          arrow
+        >
+          <Button variant="contained" onClick={handleSearchClick}>
+            SEARCH
+          </Button>
+        </HtmlTooltip>
       </div>
       <div className="song-table">
         <TableContainer component={Paper} sx={{ maxWidth: 750 }}>
